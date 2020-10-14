@@ -3,17 +3,18 @@
 ![license](https://img.shields.io/github/license/matsim-org/matsim-episim.svg)
 ![JDK](https://img.shields.io/badge/JDK-11+-green.svg)
 
+This repository contains the epidemic simulation for Los Angeles based on MATSim, provided by the [Institute of Transportation Studies](https://its.ucdavis.edu) at [University of California, Davis](https://www.ucdavis.edu) and by the [Transport Systems Planning and Transport Telematics group](https://www.vsp.tu-berlin.de) of [Technische Universität Berlin](http://www.tu-berlin.de).
+<a rel="UC Davis" href="https://its.ucdavis.edu"><img src="UC-Davis-Logo.png" width="50%" height="50%"/></a>
+<a rel="TU Berlin" href="https://www.vsp.tu-berlin.de"><img src="https://svn.vsp.tu-berlin.de/repos/public-svn/ueber_uns/logo/TUB_Logo.png" width="15%" height="15%"/></a>
 
-This repository contains an epidemic simulation based on MATSim, provided by the [Transport Systems Planning and Transport Telematics group](https://www.vsp.tu-berlin.de) of [Technische Universität Berlin](https://www.tu-berlin.de).
+This repository is a fork of the matsim-episim project provided by the [Transport Systems Planning and Transport Telematics group](https://www.vsp.tu-berlin.de) of [Technische Universität Berlin](https://www.tu-berlin.de).
 
 Dissemination of some scenarios and results produced with the methods in this repository can be found at https://matsim-vsp.github.io/covid-sim/.
-
-<a rel="TU Berlin" href="https://www.vsp.tu-berlin.de"><img src="https://svn.vsp.tu-berlin.de/repos/public-svn/ueber_uns/logo/TUB_Logo.png" width="15%" height="15%"/></a>
 
 ### How to use Episim
 
 In order perform an epidemic simulation you first need an MATSim events file.
-To get started you can also use a provided event file from the [OpenBerlin Scenario](https://svn.vsp.tu-berlin.de/repos/public-svn/matsim/scenarios/countries/de/berlin/berlin-v5.4-1pct-schools/output-berlin-v5.4-1pct-schools/berlin-v5.4-1pct-schools.output_events_for_episim.xml.gz).
+To get started you can also use a provided event file from the [OpenLosAngelesScenario](https://svn.vsp.tu-berlin.de/repos/public-svn/matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-1pct/los-angeles-v1.1-1pct.output_events-reduced-for-episim.xml.gz).
 
 It is best to run the scenarios with your IDE from the `org.matsim.run` package.
 In `org.matsim.run.modules` you can find example scenarios that you may adapt or use to create your own configuration. 
@@ -24,7 +25,7 @@ To run them you can create a standalone jar file with:
 
 and run it with (where `OpenBerlinScenario` is the name of the scenario you want to run):
 
-    java -jar matsim-episim-1.0-SNAPSHOT.jar --modules OpenBerlinScenario
+    java -jar matsim-episim-1.0-SNAPSHOT.jar --modules OpenLosAngelesScenario
     
 
 ### Generating mobility traces events file
