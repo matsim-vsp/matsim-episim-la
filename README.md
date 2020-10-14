@@ -1,6 +1,5 @@
-# MATSim Episim
+# MATSim Episim application for Los Angeles
 
-[![Build Status](https://travis-ci.org/matsim-org/matsim-episim.svg?branch=master)](https://travis-ci.org/matsim-org/matsim-episim)
 ![license](https://img.shields.io/github/license/matsim-org/matsim-episim.svg)
 ![JDK](https://img.shields.io/badge/JDK-11+-green.svg)
 
