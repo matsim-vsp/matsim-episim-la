@@ -1,22 +1,33 @@
 package org.matsim;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.IdentityHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.SplittableRandom;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.collections4.trie.PatriciaTrie;
 import org.magnos.trie.Trie;
 import org.magnos.trie.TrieMatch;
 import org.magnos.trie.Tries;
 import org.matsim.episim.EpisimConfigGroup;
-import org.matsim.run.RunEpisim;
-import org.matsim.run.modules.OpenBerlinScenario;
-import org.openjdk.jmh.annotations.*;
+import org.matsim.run.modules.OpenLosAngelesScenario;
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.BenchmarkMode;
+import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.Setup;
+import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
-
-import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -54,7 +65,7 @@ public class BenchmarkPrefixMatch {
 		activityMap = new IdentityHashMap<>();
 		activities = new ArrayList<>();
 
-		for (String act : OpenBerlinScenario.DEFAULT_ACTIVITIES) {
+		for (String act : OpenLosAngelesScenario.DEFAULT_ACTIVITIES) {
 			EpisimConfigGroup.InfectionParams param = config.getOrAddContainerParams(act);
 			params.add(param);
 			paramsMap.put(act, param);
@@ -65,10 +76,10 @@ public class BenchmarkPrefixMatch {
 		SplittableRandom rnd = new SplittableRandom(1);
 
 		for (int i = 0; i < 10_000; i++) {
-			int idx = rnd.nextInt(OpenBerlinScenario.DEFAULT_ACTIVITIES.length);
-			String act = OpenBerlinScenario.DEFAULT_ACTIVITIES[idx] + "_" + i;
+			int idx = rnd.nextInt(OpenLosAngelesScenario.DEFAULT_ACTIVITIES.length);
+			String act = OpenLosAngelesScenario.DEFAULT_ACTIVITIES[idx] + "_" + i;
 			activities.add(act);
-			activityMap.put(act, config.getOrAddContainerParams(OpenBerlinScenario.DEFAULT_ACTIVITIES[idx]));
+			activityMap.put(act, config.getOrAddContainerParams(OpenLosAngelesScenario.DEFAULT_ACTIVITIES[idx]));
 		}
 	}
 

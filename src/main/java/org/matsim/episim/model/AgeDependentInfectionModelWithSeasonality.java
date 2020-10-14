@@ -46,7 +46,7 @@ public final class AgeDependentInfectionModelWithSeasonality implements Infectio
 
 		for (String attr : target.getAttributes().getAsMap().keySet()) {
 			if (attr.contains("age")) {
-				ageTarget = (int) target.getAttributes().getAttribute(attr);
+				ageTarget = Integer.parseInt((String) target.getAttributes().getAttribute(attr));
 				break;
 			}
 		}
@@ -57,7 +57,7 @@ public final class AgeDependentInfectionModelWithSeasonality implements Infectio
 
 		for (String attr : infector.getAttributes().getAsMap().keySet()) {
 			if (attr.contains("age")) {
-				ageInfector = (int) infector.getAttributes().getAttribute(attr);
+				ageInfector = Integer.parseInt((String) infector.getAttributes().getAttribute(attr));
 				break;
 			}
 		}

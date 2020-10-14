@@ -1,8 +1,15 @@
 package org.matsim.run;
 
-import com.google.common.collect.Lists;
-import com.google.inject.*;
-import com.google.inject.util.Modules;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -19,19 +26,16 @@ import org.matsim.episim.TracingConfigGroup;
 import org.matsim.episim.model.ConfigurableProgressionModel;
 import org.matsim.episim.model.ProgressionModel;
 import org.matsim.episim.policy.FixedPolicy;
-import org.matsim.run.modules.OpenBerlinScenario;
+import org.matsim.run.modules.OpenLosAngelesScenario;
 import org.matsim.testcases.MatsimTestUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.Module;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import com.google.common.collect.Lists;
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Provides;
+import com.google.inject.Singleton;
+import com.google.inject.util.Modules;
 
 @RunWith(Parameterized.class)
 public class RunEpisimIntegrationTest {
@@ -147,7 +151,7 @@ public class RunEpisimIntegrationTest {
 
 		// there should be no infections after day 1
 		episimConfig.setPolicyConfig(FixedPolicy.config()
-				.shutdown(1, OpenBerlinScenario.DEFAULT_ACTIVITIES)
+				.shutdown(1, OpenLosAngelesScenario.DEFAULT_ACTIVITIES)
 				.build()
 		);
 
@@ -183,7 +187,7 @@ public class RunEpisimIntegrationTest {
 
 			config.controler().setOutputDirectory(utils.getOutputDirectory());
 
-			OpenBerlinScenario.addDefaultParams(episimConfig);
+			OpenLosAngelesScenario.addDefaultParams(episimConfig);
 
 			return config;
 		}

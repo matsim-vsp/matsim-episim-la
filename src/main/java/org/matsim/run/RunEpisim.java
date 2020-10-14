@@ -20,14 +20,14 @@
  */
 package org.matsim.run;
 
-import com.google.inject.Module;
-import com.google.inject.*;
-import com.google.inject.internal.BindingImpl;
-import com.google.inject.spi.ConstructorBinding;
-import com.google.inject.spi.InstanceBinding;
-import com.google.inject.spi.LinkedKeyBinding;
-import com.google.inject.spi.ProviderInstanceBinding;
-import com.google.inject.util.Modules;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,16 +37,22 @@ import org.matsim.core.config.ConfigUtils;
 import org.matsim.core.controler.OutputDirectoryLogging;
 import org.matsim.episim.EpisimModule;
 import org.matsim.episim.EpisimRunner;
-import org.matsim.run.modules.OpenBerlinScenario;
-import picocli.CommandLine;
+import org.matsim.run.modules.OpenLosAngelesScenario;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Callable;
+import com.google.inject.AbstractModule;
+import com.google.inject.Binding;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Key;
+import com.google.inject.Module;
+import com.google.inject.internal.BindingImpl;
+import com.google.inject.spi.ConstructorBinding;
+import com.google.inject.spi.InstanceBinding;
+import com.google.inject.spi.LinkedKeyBinding;
+import com.google.inject.spi.ProviderInstanceBinding;
+import com.google.inject.util.Modules;
+
+import picocli.CommandLine;
 
 /**
  * Main class to start episim. It will plug the {@link EpisimModule} together with user supplied modules and start
@@ -70,7 +76,7 @@ import java.util.concurrent.Callable;
 		footerHeading = "\n",
 		usageHelpWidth = 120,
 		usageHelpAutoWidth = true, showDefaultValues = true, mixinStandardHelpOptions = true, abbreviateSynopsis = true,
-		subcommands = {CommandLine.HelpCommand.class, RunParallel.class, CreateBatteryForCluster.class, ScenarioCreation.class, AnalysisCommand.class}
+		subcommands = {CommandLine.HelpCommand.class, RunParallel.class, CreateBatteryForCluster.class, AnalysisCommand.class}
 )
 public class RunEpisim implements Callable<Integer> {
 
@@ -198,8 +204,8 @@ public class RunEpisim implements Callable<Integer> {
 		}
 
 		if (modules.isEmpty()) {
-			log.info("Using default OpenBerlinScenario");
-			modules.add(new OpenBerlinScenario());
+			log.info("Using default OpenLosAngelesScenario");
+			modules.add(new OpenLosAngelesScenario());
 		}
 
 		log.info("Starting with modules: {}", modules);

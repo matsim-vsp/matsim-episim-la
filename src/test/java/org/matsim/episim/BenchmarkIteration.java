@@ -1,18 +1,18 @@
 package org.matsim.episim;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.util.Modules;
-import org.matsim.core.api.experimental.events.EventsManager;
-import org.matsim.run.modules.SnzBerlinWeekScenario2020;
-import org.openjdk.jmh.annotations.*;
+import java.util.concurrent.TimeUnit;
+
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.BenchmarkMode;
+import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 import org.openjdk.jmh.runner.options.TimeValue;
-
-import java.util.concurrent.TimeUnit;
 
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.SECONDS)
@@ -35,27 +35,6 @@ public class BenchmarkIteration {
 				.build();
 
 		new Runner(opt).run();
-	}
-
-	@Setup
-	public void setup() {
-
-		Injector injector = Guice.createInjector(Modules.override(new EpisimModule()).with(new SnzBerlinWeekScenario2020()));
-
-		//injector.getInstance(EpisimConfigGroup.class).setWriteEvents(EpisimConfigGroup.WriteEvents.tracing);
-		//injector.getInstance(TracingConfigGroup.class).setPutTraceablePersonsInQuarantineAfterDay(0);
-
-		runner = injector.getInstance(EpisimRunner.class);
-		replay = injector.getInstance(ReplayHandler.class);
-		handler = injector.getInstance(InfectionEventHandler.class);
-		reporting = injector.getInstance(EpisimReporting.class);
-
-		injector.getInstance(EventsManager.class).addHandler(handler);
-
-		// benchmark with event writing
-		// injector.getInstance(EventsManager.class).addHandler(reporting);
-
-		handler.init(replay.getEvents());
 	}
 
 	@Benchmark

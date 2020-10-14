@@ -50,7 +50,8 @@ public final class AgeDependentProgressionModel extends ConfigurableProgressionM
 
 		for (String attr : person.getAttributes().getAsMap().keySet()) {
 			if (attr.contains("age")) {
-				age = (int) person.getAttributes().getAttribute(attr);
+				
+				age = Integer.parseInt((String) person.getAttributes().getAttribute(attr));
 				break;
 			}
 		}
@@ -96,7 +97,7 @@ public final class AgeDependentProgressionModel extends ConfigurableProgressionM
 
 		for (String attr : person.getAttributes().getAsMap().keySet()) {
 			if (attr.contains("age")) {
-				age = (int) person.getAttributes().getAttribute(attr);
+				age = Integer.parseInt((String) person.getAttributes().getAttribute(attr));
 				break;
 			}
 		}
