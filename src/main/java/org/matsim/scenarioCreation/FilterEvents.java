@@ -29,6 +29,8 @@ import org.matsim.core.events.algorithms.EventWriterXML;
 import org.matsim.core.utils.io.IOUtils;
 import org.matsim.facilities.ActivityFacility;
 import picocli.CommandLine;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.Parameters;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -52,13 +54,13 @@ public class FilterEvents implements Callable<Integer> {
 
 	private static Logger log = LogManager.getLogger(FilterEvents.class);
 
-	@Parameters(paramLabel = "file", arity = "1", description = "Path to event file", defaultValue = "../shared-svn/projects/episim/matsim-files/snz/Deutschland/de_events.xml.gz")
+	@Parameters(paramLabel = "file", arity = "1", description = "Path to event file", defaultValue = "../public-svn/matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-1pct/los-angeles-v1.1-1pct.output_events.xml.gz")
 	private Path input;
 
-	@Option(names = "--ids", description = "Path to person ids to filter for.", defaultValue = "../shared-svn/projects/episim/matsim-files/snz/Berlin/processed-data/be_adults_idList.txt")
+	@Option(names = "--ids", description = "Path to person ids to filter for.", defaultValue = "")
 	private Path personIds;
 
-	@Option(names = "--output", description = "Output file", defaultValue = "output/eventsFilteredBerlin.xml.gz")
+	@Option(names = "--output", description = "Output file", defaultValue = "output/eventsFilteredLosAngeles.xml.gz")
 	private Path output;
 
 //	@Option(names = "--educationFacilities", description = "Path to aggregated facilities file", defaultValue = "../shared-svn/projects/episim/matsim-files/snz/Berlin/processed-data/be_snz_educationFacilities.txt")
@@ -103,7 +105,7 @@ public class FilterEvents implements Callable<Integer> {
 //			facilityreplacements = readAndMapMergedFacilities(facilities.toString());
 //		}
 
-		FilterHandler handler = new FilterHandler(null, filterIds, facilityreplacements);
+		FilterHandler handler = new FilterHandler(null, null, facilityreplacements);
 		manager.addHandler(handler);
 		EventsUtils.readEvents(manager, input.toString());
 

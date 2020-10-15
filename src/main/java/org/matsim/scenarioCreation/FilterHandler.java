@@ -67,7 +67,8 @@ public class FilterHandler implements ActivityEndEventHandler, PersonEntersVehic
 	@Override
 	public void handleEvent(ActivityEndEvent activityEndEvent) {
 		counter++;
-
+		if (activityEndEvent.getPersonId().toString().startsWith("freight")) 
+			return;
 		if (!InfectionEventHandler.shouldHandleActivityEvent(activityEndEvent, activityEndEvent.getActType()))
 			return;
 		if (population != null && !population.getPersons().containsKey(activityEndEvent.getPersonId()))
@@ -83,15 +84,17 @@ public class FilterHandler implements ActivityEndEventHandler, PersonEntersVehic
 					replacingId,
 					activityEndEvent.getActType());
 		}
-
-		facilities.add(activityEndEvent.getFacilityId());
-		events.add(activityEndEvent);
+		String corrAct = activityEndEvent.getActType().split("_")[0];
+		ActivityEndEvent e = new ActivityEndEvent(activityEndEvent.getTime(), activityEndEvent.getPersonId(), activityEndEvent.getLinkId(), activityEndEvent.getFacilityId(), corrAct);
+		facilities.add(e.getFacilityId());
+		events.add(e);
 	}
 
 	@Override
 	public void handleEvent(ActivityStartEvent activityStartEvent) {
 		counter++;
-
+		if (activityStartEvent.getPersonId().toString().startsWith("freight")) 
+			return;
 		if (!InfectionEventHandler.shouldHandleActivityEvent(activityStartEvent, activityStartEvent.getActType()))
 			return;
 		if (population != null && !population.getPersons().containsKey(activityStartEvent.getPersonId()))
@@ -108,15 +111,19 @@ public class FilterHandler implements ActivityEndEventHandler, PersonEntersVehic
 					activityStartEvent.getActType(),
 					activityStartEvent.getCoord());
 		}
-
-		facilities.add(activityStartEvent.getFacilityId());
-		events.add(activityStartEvent);
+		String corrAct = activityStartEvent.getActType().split("_")[0];
+		ActivityStartEvent e = new ActivityStartEvent(activityStartEvent.getTime(), activityStartEvent.getPersonId(), activityStartEvent.getLinkId(), activityStartEvent.getFacilityId(), corrAct, null);
+		facilities.add(e.getFacilityId());
+		events.add(e);
 	}
 
 	@Override
 	public void handleEvent(PersonEntersVehicleEvent personEntersVehicleEvent) {
 		counter++;
-
+		if (personEntersVehicleEvent.getPersonId().toString().startsWith("freight")) 
+			return;
+		if (!personEntersVehicleEvent.getVehicleId().toString().startsWith("pt")) 
+			return;
 		if (!InfectionEventHandler.shouldHandlePersonEvent(personEntersVehicleEvent))
 			return;
 		if (population != null && !population.getPersons().containsKey(personEntersVehicleEvent.getPersonId()))
@@ -130,7 +137,10 @@ public class FilterHandler implements ActivityEndEventHandler, PersonEntersVehic
 	@Override
 	public void handleEvent(PersonLeavesVehicleEvent personLeavesVehicleEvent) {
 		counter++;
-
+		if (personLeavesVehicleEvent.getPersonId().toString().startsWith("freight")) 
+			return;
+		if (!personLeavesVehicleEvent.getVehicleId().toString().startsWith("pt")) 
+			return;
 		if (!InfectionEventHandler.shouldHandlePersonEvent(personLeavesVehicleEvent))
 			return;
 		if (population != null && !population.getPersons().containsKey(personLeavesVehicleEvent.getPersonId()))
