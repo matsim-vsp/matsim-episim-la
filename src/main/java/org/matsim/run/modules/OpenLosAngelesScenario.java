@@ -26,17 +26,19 @@ import org.matsim.episim.EpisimConfigGroup;
 import org.matsim.episim.model.AgeDependentInfectionModelWithSeasonality;
 import org.matsim.episim.model.AgeDependentProgressionModel;
 import org.matsim.episim.model.ContactModel;
+import org.matsim.episim.model.FaceMask;
 import org.matsim.episim.model.InfectionModel;
 import org.matsim.episim.model.ProgressionModel;
 import org.matsim.episim.model.SymmetricContactModel;
 import org.matsim.episim.policy.FixedPolicy;
+import org.matsim.episim.policy.Restriction;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
 /**
- * Scenario based on the publicly available OpenBerlin scenario (https://github.com/matsim-scenarios/matsim-berlin).
+ * Scenario based on the publicly available LA scenario (https://github.com/matsim-scenarios/matsim-los-angeles).
  */
 public class OpenLosAngelesScenario extends AbstractModule {
 
@@ -46,12 +48,11 @@ public class OpenLosAngelesScenario extends AbstractModule {
 	public static final String[] DEFAULT_ACTIVITIES = {
 			"work", "university", "school", "escort", "schoolescort", "schoolpureescort", "schoolridesharing", "non-schoolescort", 
 			"maintenance", "HHmaintenance", "personalmaintenance", "eatout", "eatoutbreakfast", "eatoutlunch", "eatoutdinner",
-			"visiting", "discretionary", "specialevent", "atwork", "atworkbusiness", "atworklunch", "atworkother",
-			"freightStart", "freightEnd"
+			"visiting", "discretionary", "specialevent", "atwork", "atworkbusiness", "atworklunch", "atworkother", "shop",
 	};
 
 	/**
-	 * Adds default parameters that should be valid for most scenarios.
+	 * Adds default parameters for LA scenario.
 	 */
 	public static void addDefaultParams(EpisimConfigGroup config) {
 		config.getOrAddContainerParams("pt", "tr");
@@ -87,10 +88,6 @@ public class OpenLosAngelesScenario extends AbstractModule {
 		
 		config.getOrAddContainerParams("business").setContactIntensity(1.5); // 
 		config.getOrAddContainerParams("non-schoolescort").setContactIntensity(1.0);
-
-		// freight act:
-		config.getOrAddContainerParams("freightStart").setContactIntensity(0.);
-		config.getOrAddContainerParams("freightEnd").setContactIntensity(0.);
 		
 		config.getOrAddContainerParams("quarantine_home").setContactIntensity(0.3);
 	}
@@ -107,6 +104,7 @@ public class OpenLosAngelesScenario extends AbstractModule {
 		config.plans().setInputFile("https://svn.vsp.tu-berlin.de/repos/public-svn/matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/input/los-angeles-v1.0-population-1pct_2020-03-07.xml.gz");
 		
 		episimConfig.setInputEventsFile("https://svn.vsp.tu-berlin.de/repos/public-svn/matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-1pct/los-angeles-v1.1-1pct.output_events-reduced-for-episim.xml.gz");
+		
 		episimConfig.setFacilitiesHandling(EpisimConfigGroup.FacilitiesHandling.bln);
 		episimConfig.setSampleSize(0.01);
 		episimConfig.setCalibrationParameter(2);		
@@ -114,10 +112,14 @@ public class OpenLosAngelesScenario extends AbstractModule {
 		episimConfig.setInitialInfections(100); // disease import: one infection per day until day 100
 
 		addDefaultParams(episimConfig);
-
-		// restrict: 0.2 --> 20 percent of activities still occur
+		
+		// Here we set the restrictions. A possible starting point could be the google mobility reports: https://www.google.com/covid19/mobility/
 		episimConfig.setPolicy(FixedPolicy.class, FixedPolicy.config()
-				.restrict("2020-06-01", 0.5, DEFAULT_ACTIVITIES)
+				//only 50% of out-of-home activities still occur
+				.restrict("2020-03-01", 0.5, DEFAULT_ACTIVITIES)
+				//90% of public transport passengers wear a cloth mask 
+				.restrict("2020-04-01", Restriction.ofMask(FaceMask.CLOTH, 0.9), "pt")
+				//only 90% of out-of-home activities still occur
 				.restrict("2020-10-01", 0.9, DEFAULT_ACTIVITIES)
 				.build()
 		);
