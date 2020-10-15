@@ -102,7 +102,7 @@ public class OpenLosAngelesScenario extends AbstractModule {
 		Config config = ConfigUtils.createConfig(new EpisimConfigGroup());
 		EpisimConfigGroup episimConfig = ConfigUtils.addOrGetModule(config, EpisimConfigGroup.class);
 
-		config.controler().setOutputDirectory("output_run1");
+		config.controler().setOutputDirectory("output/output_run1");
 		config.global().setCoordinateSystem("EPSG:3310");	
 		config.plans().setInputFile("https://svn.vsp.tu-berlin.de/repos/public-svn/matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/input/los-angeles-v1.0-population-1pct_2020-03-07.xml.gz");
 		
