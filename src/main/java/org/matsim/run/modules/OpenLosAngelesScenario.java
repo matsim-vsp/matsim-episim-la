@@ -20,6 +20,10 @@
  */
 package org.matsim.run.modules;
 
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.episim.EpisimConfigGroup;
@@ -111,13 +115,27 @@ public class OpenLosAngelesScenario extends AbstractModule {
 		episimConfig.setSampleSize(0.01);
 		episimConfig.setCalibrationParameter(2);		
 		episimConfig.setStartDate("2020-01-01");
-		episimConfig.setInitialInfections(100); // disease import: one infection per day until day 100
-
+		
+		// disease import
+		// first, set the day until which we have a disease import
+		// -> set to Integer.MAX_VALUE in order to not have a limitation
+		episimConfig.setInitialInfections(Integer.MAX_VALUE);
+		// second, set the daily infected agents rates
+		// -> these numbers are given in infected agents per day
+		// -> these numbers are daily numbers that are valid from provided start day
+		Map<LocalDate, Integer> infectionsPerDay = new HashMap<>();
+		infectionsPerDay.put(LocalDate.parse("2020-01-01"), 100);
+		infectionsPerDay.put(LocalDate.parse("2020-02-01"), 50); 
+		infectionsPerDay.put(LocalDate.parse("2020-03-01"), 10);
+		infectionsPerDay.put(LocalDate.parse("2020-04-01"), 0);
+		episimConfig.setInfections_pers_per_day(infectionsPerDay);
+		
 		addDefaultParams(episimConfig);
 
-		// restrict: 0.2 --> 20 percent of activities still occur
+		// implement activity-specific restrictions (school closures, homeoffice, and so on)
+		// the numbers in the restrict() method indicates the percentage of activities that still occur
 		episimConfig.setPolicy(FixedPolicy.class, FixedPolicy.config()
-				.restrict("2020-06-01", 0.5, DEFAULT_ACTIVITIES)
+				.restrict("2020-02-01", 0.5, DEFAULT_ACTIVITIES)
 				.restrict("2020-10-01", 0.9, DEFAULT_ACTIVITIES)
 				.build()
 		);
