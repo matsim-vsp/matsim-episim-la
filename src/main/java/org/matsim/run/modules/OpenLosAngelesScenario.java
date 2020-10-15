@@ -102,30 +102,22 @@ public class OpenLosAngelesScenario extends AbstractModule {
 		Config config = ConfigUtils.createConfig(new EpisimConfigGroup());
 		EpisimConfigGroup episimConfig = ConfigUtils.addOrGetModule(config, EpisimConfigGroup.class);
 
-//		config.network().setInputFile("https://svn.vsp.tu-berlin.de/repos/public-svn/matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-1pct/los-angeles-v1.1-1pct.output_network.xml.gz");
-		
-		config.global().setCoordinateSystem("EPSG:3310");
-		
-//		config.plans().setInputFile("/Users/ihab/Documents/workspace/public-svn/matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/input/los-angeles-v1.0-population-1pct_2020-03-07.xml.gz");
+		config.controler().setOutputDirectory("output_run1");
+		config.global().setCoordinateSystem("EPSG:3310");	
 		config.plans().setInputFile("https://svn.vsp.tu-berlin.de/repos/public-svn/matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/input/los-angeles-v1.0-population-1pct_2020-03-07.xml.gz");
 		
-		String url = "https://svn.vsp.tu-berlin.de/repos/public-svn/matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-1pct/los-angeles-v1.1-1pct.output_events-reduced-for-episim.xml.gz";
-		
-		episimConfig.setInputEventsFile(url);
-
+		episimConfig.setInputEventsFile("https://svn.vsp.tu-berlin.de/repos/public-svn/matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-1pct/los-angeles-v1.1-1pct.output_events-reduced-for-episim.xml.gz");
 		episimConfig.setFacilitiesHandling(EpisimConfigGroup.FacilitiesHandling.bln);
 		episimConfig.setSampleSize(0.01);
-		episimConfig.setCalibrationParameter(2);
-		//  episimConfig.setOutputEventsFolder("events");
-		
-		episimConfig.setStartDate("2020-03-01");
+		episimConfig.setCalibrationParameter(2);		
+		episimConfig.setStartDate("2020-01-01");
 		episimConfig.setInitialInfections(100); // disease import: one infection per day until day 100
 
 		addDefaultParams(episimConfig);
 
 		// restrict: 0.2 --> 20 percent of activities still occur
 		episimConfig.setPolicy(FixedPolicy.class, FixedPolicy.config()
-				.restrict("2020-07-01", 0.5, DEFAULT_ACTIVITIES)
+				.restrict("2020-06-01", 0.5, DEFAULT_ACTIVITIES)
 				.restrict("2020-10-01", 0.9, DEFAULT_ACTIVITIES)
 				.build()
 		);
