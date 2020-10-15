@@ -114,11 +114,11 @@ public class OpenLosAngelesScenario extends AbstractModule {
 		episimConfig.setCalibrationParameter(2);		
 		episimConfig.setStartDate("2020-01-01");
 		
-		// disease import
-		// first, set the day until which we have a disease import
+		// Here we set the disease import.
+		// First, set the day until which we have a disease import.
 		// -> set to Integer.MAX_VALUE in order to not have a limitation
 		episimConfig.setInitialInfections(Integer.MAX_VALUE);
-		// second, set the daily infected agents rates
+		// Second, set the daily infected agents rates.
 		// -> these numbers are given in infected agents per day
 		// -> these numbers are daily numbers that are valid from provided start day
 		Map<LocalDate, Integer> infectionsPerDay = new HashMap<>();
