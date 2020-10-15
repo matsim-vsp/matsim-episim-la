@@ -109,18 +109,18 @@ public class OpenLosAngelesScenario extends AbstractModule {
 		episimConfig.setSampleSize(0.01);
 		episimConfig.setCalibrationParameter(2);		
 		episimConfig.setStartDate("2020-01-01");
-		episimConfig.setInitialInfections(100); // disease import: one infection per day until day 100
+		episimConfig.setInitialInfections(200); // disease import: one infection per day until day 200
 
 		addDefaultParams(episimConfig);
 		
 		// Here we set the restrictions. A possible starting point could be the google mobility reports: https://www.google.com/covid19/mobility/
 		episimConfig.setPolicy(FixedPolicy.class, FixedPolicy.config()
 				//only 50% of out-of-home activities still occur
-				.restrict("2020-03-01", 0.5, DEFAULT_ACTIVITIES)
+				.restrict("2020-04-01", 0.5, DEFAULT_ACTIVITIES)
 				//90% of public transport passengers wear a cloth mask 
 				.restrict("2020-04-01", Restriction.ofMask(FaceMask.CLOTH, 0.9), "pt")
-				//only 90% of out-of-home activities still occur
-				.restrict("2020-10-01", 0.9, DEFAULT_ACTIVITIES)
+				//only 75% of out-of-home activities still occur
+				.restrict("2020-06-01", 0.75, DEFAULT_ACTIVITIES)
 				.build()
 		);
 
