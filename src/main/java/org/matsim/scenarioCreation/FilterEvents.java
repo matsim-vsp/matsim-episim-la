@@ -54,7 +54,7 @@ public class FilterEvents implements Callable<Integer> {
 
 	private static Logger log = LogManager.getLogger(FilterEvents.class);
 
-	@Parameters(paramLabel = "file", arity = "1", description = "Path to event file", defaultValue = "../public-svn/matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-1pct/los-angeles-v1.1-1pct.output_events.xml.gz")
+	@Parameters(paramLabel = "file", arity = "1", description = "Path to event file", defaultValue = "https://svn.vsp.tu-berlin.de/repos/public-svn/matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-10pct/los-angeles-v1.1-10pct/la-v1.1-10pct_teleported1.output_events-reduced-for-episim.xml.gz")
 	private Path input;
 
 	@Option(names = "--ids", description = "Path to person ids to filter for.", defaultValue = "")
