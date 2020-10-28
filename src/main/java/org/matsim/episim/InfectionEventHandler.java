@@ -618,10 +618,16 @@ public final class InfectionEventHandler implements ActivityEndEventHandler, Per
 			// TODO: this has poor performance and should be preprocessing...
 			if (event instanceof ActivityStartEvent) {
 				ActivityStartEvent theEvent = (ActivityStartEvent) event;
-				return Id.create(theEvent.getActType().split("_")[0] + "_" + theEvent.getLinkId().toString(), ActivityFacility.class);
+//				return Id.create(theEvent.getActType().split("_")[0] + "_" + theEvent.getLinkId().toString(), ActivityFacility.class);
+				String prefix = "";
+				if (theEvent.getActType().startsWith("home")) prefix = "home_";
+				return Id.create(prefix + theEvent.getLinkId().toString(), ActivityFacility.class);
 			} else if (event instanceof ActivityEndEvent) {
 				ActivityEndEvent theEvent = (ActivityEndEvent) event;
-				return Id.create(theEvent.getActType().split("_")[0] + "_" + theEvent.getLinkId().toString(), ActivityFacility.class);
+//				return Id.create(theEvent.getActType().split("_")[0] + "_" + theEvent.getLinkId().toString(), ActivityFacility.class);
+				String prefix = "";
+				if (theEvent.getActType().startsWith("home")) prefix = "home_";
+				return Id.create(prefix + theEvent.getLinkId().toString(), ActivityFacility.class);
 			} else {
 				throw new IllegalStateException("unexpected event type=" + ((Event) event).getEventType());
 			}
