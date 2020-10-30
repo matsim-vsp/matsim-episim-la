@@ -122,6 +122,12 @@ public class OpenLosAngelesScenario extends AbstractModule {
 			episimConfig.setSampleSize(0.1);
 			episimConfig.setCalibrationParameter(0.001);		
 		}
+		else if (sample == 25) {
+			config.plans().setInputFile(svnLocation + "matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-25pct/los-angeles-v1.0-population-25pct_2020-03-07_teleported.xml.gz");
+			episimConfig.setInputEventsFile(svnLocation + "matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-25pct/la-v1.1-25pct_teleported1.output_events-reduced-for-episim.xml.gz");
+			episimConfig.setSampleSize(0.25);
+			episimConfig.setCalibrationParameter(0.001);		
+		}
 		else throw new RuntimeException("Sample size does not exist!");
 		
 		
