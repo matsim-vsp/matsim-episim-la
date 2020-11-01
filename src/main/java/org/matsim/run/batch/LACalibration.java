@@ -16,7 +16,8 @@ import javax.annotation.Nullable;
 
 
 /**
- * Runs for la model
+ * Runs for la model. To run all combinations set below in Params just start RunParallel.java.
+ * Batch runs are useful to calibrate the model, to run multiple seeds or to investigate the effects of different restrictions.
  */
 public class LACalibration implements BatchRun<LACalibration.Params> {
 
@@ -39,6 +40,7 @@ public class LACalibration implements BatchRun<LACalibration.Params> {
 		config.global().setRandomSeed(params.seed);
 
 		EpisimConfigGroup episimConfig = ConfigUtils.addOrGetModule(config, EpisimConfigGroup.class);
+		episimConfig.setCalibrationParameter(params.calibrationParam);
 		
 		//adapt episimConfig here
 		//...
@@ -51,7 +53,7 @@ public class LACalibration implements BatchRun<LACalibration.Params> {
 		ConfigBuilder builder = FixedPolicy.parse(episimConfig.getPolicy());
 		
 		//adapt restrictions here
-		//..
+		//...
 		
 		episimConfig.setPolicy(FixedPolicy.class, builder.build());
 
@@ -59,8 +61,10 @@ public class LACalibration implements BatchRun<LACalibration.Params> {
 	}
 
 	public static final class Params {
+		
+		//this example produces 2 * 3 = 6 runs. (2 random seeds, 3 different calibration params)
 
-		@GenerateSeeds(1)
+		@GenerateSeeds(2)
 		public long seed;
 		
 		@Parameter({1.E-2, 1.E-3, 1.E-4})
