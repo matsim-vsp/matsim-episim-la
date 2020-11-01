@@ -29,7 +29,6 @@ import java.util.Map;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.episim.EpisimConfigGroup;
-import org.matsim.episim.model.AgeDependentInfectionModelWithSeasonality;
 import org.matsim.episim.model.AgeDependentInfectionModelWithoutSeasonality;
 import org.matsim.episim.model.AgeDependentProgressionModel;
 import org.matsim.episim.model.ContactModel;
