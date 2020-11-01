@@ -21,6 +21,8 @@
 package org.matsim.run.modules;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +30,7 @@ import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.episim.EpisimConfigGroup;
 import org.matsim.episim.model.AgeDependentInfectionModelWithSeasonality;
+import org.matsim.episim.model.AgeDependentInfectionModelWithoutSeasonality;
 import org.matsim.episim.model.AgeDependentProgressionModel;
 import org.matsim.episim.model.ContactModel;
 import org.matsim.episim.model.FaceMask;
@@ -100,14 +103,19 @@ public class OpenLosAngelesScenario extends AbstractModule {
 	@Singleton
 	public Config config() {
 		
-		int sample = 10; //1 and 10 are currently possible
-		String svnLocation = "https://svn.vsp.tu-berlin.de/repos/public-svn/";
-//		String svnLocation = "../public-svn/";
+		int sample = 10; // currently possible: 1, 10, 25
+//		String svnLocation = "https://svn.vsp.tu-berlin.de/repos/public-svn/";
+		String svnLocation = "../public-svn/";
 
 		Config config = ConfigUtils.createConfig(new EpisimConfigGroup());
 		EpisimConfigGroup episimConfig = ConfigUtils.addOrGetModule(config, EpisimConfigGroup.class);
 
-		config.controler().setOutputDirectory("output/output_run1-" + sample + "%");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");  
+		LocalDateTime now = LocalDateTime.now();
+		String dateTimeString = dtf.format(now);
+		
+		   
+		config.controler().setOutputDirectory("output/output_" + sample + "pct_" + dateTimeString);
 		config.global().setCoordinateSystem("EPSG:3310");	
 		
 		if (sample == 1) {
@@ -168,7 +176,7 @@ public class OpenLosAngelesScenario extends AbstractModule {
 	protected void configure() {
 		bind(ContactModel.class).to(SymmetricContactModel.class).in(Singleton.class);
 		bind(ProgressionModel.class).to(AgeDependentProgressionModel.class).in(Singleton.class);
-		bind(InfectionModel.class).to(AgeDependentInfectionModelWithSeasonality.class).in(Singleton.class);
+		bind(InfectionModel.class).to(AgeDependentInfectionModelWithoutSeasonality.class).in(Singleton.class);
 	}
 
 }
