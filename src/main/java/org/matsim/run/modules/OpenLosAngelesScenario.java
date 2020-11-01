@@ -103,8 +103,8 @@ public class OpenLosAngelesScenario extends AbstractModule {
 	public Config config() {
 		
 		int sample = 10; // currently possible: 1, 10, 25
-//		String svnLocation = "https://svn.vsp.tu-berlin.de/repos/public-svn/";
-		String svnLocation = "../public-svn/";
+		String svnLocation = "https://svn.vsp.tu-berlin.de/repos/public-svn/";
+//		String svnLocation = "../public-svn/";
 
 		Config config = ConfigUtils.createConfig(new EpisimConfigGroup());
 		EpisimConfigGroup episimConfig = ConfigUtils.addOrGetModule(config, EpisimConfigGroup.class);
@@ -118,19 +118,19 @@ public class OpenLosAngelesScenario extends AbstractModule {
 		config.global().setCoordinateSystem("EPSG:3310");	
 		
 		if (sample == 1) {
-			config.plans().setInputFile(svnLocation + "matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/input/los-angeles-v1.0-population-1pct_2020-03-07.xml.gz");
+			config.plans().setInputFile(svnLocation + "matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/input/los-angeles-v1.0-population-1pct_2020-03-07_reduced-for-episim.xml.gz");
 			episimConfig.setInputEventsFile(svnLocation + "matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-1pct/los-angeles-v1.1-1pct.output_events-reduced-for-episim.xml.gz");
 			episimConfig.setSampleSize(0.01);
 			episimConfig.setCalibrationParameter(2);		
 		}
 		else if (sample == 10) {
-			config.plans().setInputFile(svnLocation + "matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-10pct/los-angeles-v1.0-population-10pct_2020-03-07_teleported.xml.gz");
+			config.plans().setInputFile(svnLocation + "matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-10pct/los-angeles-v1.0-population-10pct_2020-03-07_teleported_reduced-for-episim.xml.gz");
 			episimConfig.setInputEventsFile(svnLocation + "matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-10pct/la-v1.1-10pct_teleported1.output_events-reduced-for-episim.xml.gz");
 			episimConfig.setSampleSize(0.1);
 			episimConfig.setCalibrationParameter(0.001);		
 		}
 		else if (sample == 25) {
-			config.plans().setInputFile(svnLocation + "matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-25pct/los-angeles-v1.0-population-25pct_2020-03-07_teleported.xml.gz");
+			config.plans().setInputFile(svnLocation + "matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-25pct/los-angeles-v1.0-population-25pct_2020-03-07_teleported_reduced-for-episim.xml.gz");
 			episimConfig.setInputEventsFile(svnLocation + "matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-25pct/la-v1.1-25pct_teleported1.output_events-reduced-for-episim.xml.gz");
 			episimConfig.setSampleSize(0.25);
 			episimConfig.setCalibrationParameter(0.001);		
