@@ -70,15 +70,15 @@ public class RunParallel<T> implements Callable<Integer> {
 	private Path output;
 
 	public static final String OPTION_SETUP = "--setup";
-	@CommandLine.Option(names = OPTION_SETUP, defaultValue = "${env:EPISIM_SETUP:-org.matsim.run.batch.Percolation}")
+	@CommandLine.Option(names = OPTION_SETUP, defaultValue = "${env:EPISIM_SETUP:-org.matsim.run.batch.LACalibration}")
 	private Class<? extends BatchRun<T>> setup;
 
 	public static final String OPTION_PARAMS = "--params";
-	@CommandLine.Option(names = OPTION_PARAMS, defaultValue = "${env:EPISIM_PARAMS:-org.matsim.run.batch.Percolation$Params}")
+	@CommandLine.Option(names = OPTION_PARAMS, defaultValue = "${env:EPISIM_PARAMS:-org.matsim.run.batch.LACalibration$Params}")
 	private Class<T> params;
 
 	public static final String OPTION_THREADS = "--threads";
-	@CommandLine.Option(names = OPTION_THREADS, defaultValue = "4", description = "Number of threads to use concurrently")
+	@CommandLine.Option(names = OPTION_THREADS, defaultValue = "2", description = "Number of threads to use concurrently")
 	private int threads;
 
 	@CommandLine.Option(names = "--total-worker", defaultValue = "1", description = "Total number of worker processes available for this run." +
@@ -95,7 +95,7 @@ public class RunParallel<T> implements Callable<Integer> {
 	private int maxJobs;
 
 	public static final String OPTION_ITERATIONS = "--iterations";
-	@CommandLine.Option(names = OPTION_ITERATIONS, description = "Maximum number of days to simulate.", defaultValue = "360")
+	@CommandLine.Option(names = OPTION_ITERATIONS, description = "Maximum number of days to simulate.", defaultValue = "50")
 	private int maxIterations;
 
 	@CommandLine.Option(names = "--no-reuse", defaultValue = "false", description = "Don't reuse the scenario and events for the runs.")
