@@ -95,7 +95,7 @@ public class RunParallel<T> implements Callable<Integer> {
 	private int maxJobs;
 
 	public static final String OPTION_ITERATIONS = "--iterations";
-	@CommandLine.Option(names = OPTION_ITERATIONS, description = "Maximum number of days to simulate.", defaultValue = "50")
+	@CommandLine.Option(names = OPTION_ITERATIONS, description = "Maximum number of days to simulate.", defaultValue = "120")
 	private int maxIterations;
 
 	@CommandLine.Option(names = "--no-reuse", defaultValue = "false", description = "Don't reuse the scenario and events for the runs.")
