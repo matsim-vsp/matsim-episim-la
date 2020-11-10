@@ -619,15 +619,15 @@ public final class InfectionEventHandler implements ActivityEndEventHandler, Per
 			if (event instanceof ActivityStartEvent) {
 				ActivityStartEvent theEvent = (ActivityStartEvent) event;
 //				return Id.create(theEvent.getActType().split("_")[0] + "_" + theEvent.getLinkId().toString(), ActivityFacility.class);
-				String prefix = "";
-				if (theEvent.getActType().startsWith("home")) prefix = "home_";
-				return Id.create(prefix + theEvent.getLinkId().toString(), ActivityFacility.class);
+				String facilityId = theEvent.getLinkId().toString();
+				if (theEvent.getActType().startsWith("home")) facilityId = personMap.get(((ActivityStartEvent) event).getPersonId()).getAttributes().getAttribute("householdId").toString();
+				return Id.create(facilityId, ActivityFacility.class);
 			} else if (event instanceof ActivityEndEvent) {
 				ActivityEndEvent theEvent = (ActivityEndEvent) event;
 //				return Id.create(theEvent.getActType().split("_")[0] + "_" + theEvent.getLinkId().toString(), ActivityFacility.class);
-				String prefix = "";
-				if (theEvent.getActType().startsWith("home")) prefix = "home_";
-				return Id.create(prefix + theEvent.getLinkId().toString(), ActivityFacility.class);
+				String facilityId = theEvent.getLinkId().toString();
+				if (theEvent.getActType().startsWith("home")) facilityId = personMap.get(((ActivityEndEvent) event).getPersonId()).getAttributes().getAttribute("householdId").toString();
+				return Id.create(facilityId, ActivityFacility.class);
 			} else {
 				throw new IllegalStateException("unexpected event type=" + ((Event) event).getEventType());
 			}
