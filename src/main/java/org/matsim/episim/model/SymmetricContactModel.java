@@ -105,6 +105,10 @@ public final class SymmetricContactModel extends AbstractContactModel {
 //				}
 //				log.warn("containerId={}; typical capacity={}; maxPersonsInContainer={}" , container.getContainerId(), container.getTypicalCapacity(), maxPersonsInContainer );
 			}
+			if (container instanceof InfectionEventHandler.EpisimVehicle) {
+				maxPersonsInContainer = (int) (100 * episimConfig.getSampleSize());
+			}
+			
 
 			// it may happen that persons enter and leave an container at the same time
 			// effectively they have a joint time of 0 and will not count towards maximum group size
