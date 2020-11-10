@@ -64,7 +64,7 @@ public class OpenLosAngelesScenario extends AbstractModule {
 		config.getOrAddContainerParams("pt", "tr");
 		// regular out-of-home acts:
 		config.getOrAddContainerParams("home").setContactIntensity(1.0);
-		config.getOrAddContainerParams("work").setContactIntensity(1.5);
+		config.getOrAddContainerParams("work").setContactIntensity(1.47);
 		config.getOrAddContainerParams("university").setContactIntensity(5.5);
 		config.getOrAddContainerParams("escort").setContactIntensity(1.0);
 		
@@ -73,10 +73,10 @@ public class OpenLosAngelesScenario extends AbstractModule {
 //		config.getOrAddContainerParams("schoolpureescort");
 //		config.getOrAddContainerParams("schoolridesharing");
 		
-		config.getOrAddContainerParams("shop").setContactIntensity(0.9);
-		config.getOrAddContainerParams("maintenance").setContactIntensity(0.9);
-		config.getOrAddContainerParams("HHmaintenance").setContactIntensity(0.9);
-		config.getOrAddContainerParams("personalmaintenance").setContactIntensity(0.9);
+		config.getOrAddContainerParams("shop").setContactIntensity(0.88);
+		config.getOrAddContainerParams("maintenance").setContactIntensity(0.88);
+		config.getOrAddContainerParams("HHmaintenance").setContactIntensity(0.88);
+		config.getOrAddContainerParams("personalmaintenance").setContactIntensity(0.88);
 		
 		config.getOrAddContainerParams("eatout").setContactIntensity(9.24);
 //		config.getOrAddContainerParams("eatoutbreakfast");
@@ -84,18 +84,18 @@ public class OpenLosAngelesScenario extends AbstractModule {
 //		config.getOrAddContainerParams("eatoutdinner");
 		
 		config.getOrAddContainerParams("visiting").setContactIntensity(9.24);
-		config.getOrAddContainerParams("discretionary");
+		config.getOrAddContainerParams("discretionary").setContactIntensity(9.24);
 		config.getOrAddContainerParams("specialevent").setContactIntensity(9.24);
 		
-		config.getOrAddContainerParams("atwork").setContactIntensity(1.5);
+		config.getOrAddContainerParams("atwork").setContactIntensity(1.47);
 //		config.getOrAddContainerParams("atworkbusiness");
 //		config.getOrAddContainerParams("atworklunch");
 //		config.getOrAddContainerParams("atworkother");
 		
-		config.getOrAddContainerParams("business").setContactIntensity(1.5); // 
+		config.getOrAddContainerParams("business").setContactIntensity(1.47); // 
 		config.getOrAddContainerParams("non-schoolescort").setContactIntensity(1.0);
 		
-		config.getOrAddContainerParams("quarantine_home").setContactIntensity(0.3);
+		config.getOrAddContainerParams("quarantine_home").setContactIntensity(1.0);
 	}
 
 	@Provides
@@ -139,7 +139,7 @@ public class OpenLosAngelesScenario extends AbstractModule {
 		
 		
 		episimConfig.setFacilitiesHandling(EpisimConfigGroup.FacilitiesHandling.bln);
-		episimConfig.setStartDate("2020-01-01");
+		episimConfig.setStartDate("2020-02-15");
 		
 		// Here we set the disease import.
 		// First, set the day until which we have a disease import.
@@ -149,22 +149,20 @@ public class OpenLosAngelesScenario extends AbstractModule {
 		// -> these numbers are given in infected agents per day
 		// -> these numbers are daily numbers that are valid from provided start day
 		Map<LocalDate, Integer> infectionsPerDay = new HashMap<>();
-		infectionsPerDay.put(LocalDate.parse("2020-01-01"), 50);
-		infectionsPerDay.put(LocalDate.parse("2020-02-01"), 10); 
-		infectionsPerDay.put(LocalDate.parse("2020-03-01"), 5);
-		infectionsPerDay.put(LocalDate.parse("2020-04-01"), 0);
+		infectionsPerDay.put(LocalDate.parse("2020-02-15"), 5);
 		episimConfig.setInfections_pers_per_day(infectionsPerDay);
 		
 		addDefaultParams(episimConfig);
 		
 		// Here we set the restrictions. A possible starting point could be the google mobility reports: https://www.google.com/covid19/mobility/
 		episimConfig.setPolicy(FixedPolicy.class, FixedPolicy.config()
-				//only 50% of out-of-home activities still occur
-				.restrict("2020-04-01", 0.5, DEFAULT_ACTIVITIES)
+				.restrict("2020-03-15", 0.85, DEFAULT_ACTIVITIES) //only 85% of out-of-home activities still occur
+				.restrict("2020-03-22", 0.65, DEFAULT_ACTIVITIES)
+				.restrict("2020-03-29", 0.6, DEFAULT_ACTIVITIES)
+				.restrict("2020-06-10", 0.75, DEFAULT_ACTIVITIES)
+
 				//90% of public transport passengers wear a cloth mask 
 				.restrict("2020-04-01", Restriction.ofMask(FaceMask.CLOTH, 0.9), "pt")
-				//only 75% of out-of-home activities still occur
-				.restrict("2020-06-01", 0.75, DEFAULT_ACTIVITIES)
 				.build()
 		);
 
