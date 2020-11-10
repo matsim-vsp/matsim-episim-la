@@ -10,6 +10,9 @@ import org.matsim.episim.policy.FixedPolicy;
 import org.matsim.episim.policy.FixedPolicy.ConfigBuilder;
 import org.matsim.run.modules.OpenLosAngelesScenario;
 
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -34,13 +37,17 @@ public class LACalibration implements BatchRun<LACalibration.Params> {
 	@Override
 	public Config prepareConfig(int id, Params params) {
 
-		OpenLosAngelesScenario module = 
-				new OpenLosAngelesScenario();
+		OpenLosAngelesScenario module = new OpenLosAngelesScenario();
 		Config config = module.config();
 		config.global().setRandomSeed(params.seed);
 
 		EpisimConfigGroup episimConfig = ConfigUtils.addOrGetModule(config, EpisimConfigGroup.class);
 		episimConfig.setCalibrationParameter(params.calibrationParam);
+		
+		Map<LocalDate, Integer> infectionsPerDay = new HashMap<>();
+		
+		infectionsPerDay.put(LocalDate.parse("2020-02-15"), params.dailyImportedCases);
+		episimConfig.setInfections_pers_per_day(infectionsPerDay);
 		
 		//adapt episimConfig here
 		//...
@@ -54,6 +61,7 @@ public class LACalibration implements BatchRun<LACalibration.Params> {
 		
 		//adapt restrictions here
 		//...
+//		builder.restrict("2020-06-10", params.remainingFraction, OpenLosAngelesScenario.DEFAULT_ACTIVITIES);
 		
 		episimConfig.setPolicy(FixedPolicy.class, builder.build());
 
@@ -62,14 +70,19 @@ public class LACalibration implements BatchRun<LACalibration.Params> {
 
 	public static final class Params {
 		
-		//this example produces 2 * 3 = 6 runs. (2 random seeds, 3 different calibration params)
-
-		@GenerateSeeds(2)
+		@GenerateSeeds(1)
 		public long seed;
 		
 		@Parameter({1.E-2, 1.E-3, 1.E-4})
 		double calibrationParam;
-
+		
+//		@IntParameter({1, 5, 10})
+		@IntParameter({1})
+		int dailyImportedCases;
+		
+//		@Parameter({0.75, 0.5})
+//		double remainingFraction;
+		
 	}
 
 
