@@ -29,7 +29,7 @@ import java.util.Map;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.episim.EpisimConfigGroup;
-import org.matsim.episim.model.AgeDependentInfectionModelWithoutSeasonality;
+import org.matsim.episim.model.AgeDependentInfectionModelWithSeasonality;
 import org.matsim.episim.model.AgeDependentProgressionModel;
 import org.matsim.episim.model.ContactModel;
 import org.matsim.episim.model.FaceMask;
@@ -103,8 +103,8 @@ public class OpenLosAngelesScenario extends AbstractModule {
 	public Config config() {
 		
 		int sample = 10; // currently possible: 1, 10, 25
-		String svnLocation = "https://svn.vsp.tu-berlin.de/repos/public-svn/";
-//		String svnLocation = "../public-svn/";
+//		String svnLocation = "https://svn.vsp.tu-berlin.de/repos/public-svn/";
+		String svnLocation = "../public-svn/";
 
 		Config config = ConfigUtils.createConfig(new EpisimConfigGroup());
 		EpisimConfigGroup episimConfig = ConfigUtils.addOrGetModule(config, EpisimConfigGroup.class);
@@ -173,7 +173,7 @@ public class OpenLosAngelesScenario extends AbstractModule {
 	protected void configure() {
 		bind(ContactModel.class).to(SymmetricContactModel.class).in(Singleton.class);
 		bind(ProgressionModel.class).to(AgeDependentProgressionModel.class).in(Singleton.class);
-		bind(InfectionModel.class).to(AgeDependentInfectionModelWithoutSeasonality.class).in(Singleton.class);
+		bind(InfectionModel.class).to(AgeDependentInfectionModelWithSeasonality.class).in(Singleton.class);
 	}
 
 }

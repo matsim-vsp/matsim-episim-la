@@ -3,10 +3,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.matsim-org</groupId>
-    <artifactId>matsim-episim</artifactId>
+    <artifactId>matsim-episim-la</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>MATSim Episim</name>
+    <name>MATSim Episim application for Los Angeles</name>
     <description>Epidemic simulation for MATSim</description>
     <organization>
         <name>matsim-org</name>
@@ -219,7 +219,11 @@
         <!--            <artifactId>tablesaw-html</artifactId>-->
         <!--            <version>LATEST</version>-->
         <!--        </dependency>-->
-
+		<dependency>
+	   		<groupId>com.github.matsim-org</groupId>
+	    	<artifactId>matsim-episim</artifactId>
+	    	<version>ba3ef70baf</version>
+		</dependency>
     </dependencies>
 
     <build>
