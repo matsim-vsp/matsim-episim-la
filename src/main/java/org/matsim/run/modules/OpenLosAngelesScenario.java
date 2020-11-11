@@ -54,7 +54,7 @@ public class OpenLosAngelesScenario extends AbstractModule {
 	public static final String[] DEFAULT_ACTIVITIES = {
 			"work", "university", "school", "escort", "schoolescort", "schoolpureescort", "schoolridesharing", "non-schoolescort", 
 			"maintenance", "HHmaintenance", "personalmaintenance", "eatout", "eatoutbreakfast", "eatoutlunch", "eatoutdinner",
-			"visiting", "discretionary", "specialevent", "atwork", "atworkbusiness", "atworklunch", "atworkother", "shop",
+			"visiting", "discretionary", "specialevent", "atwork", "atworkbusiness", "atworklunch", "atworkother", "shop", "business"
 	};
 
 	/**
