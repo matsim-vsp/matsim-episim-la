@@ -463,10 +463,12 @@ public final class EpisimReporting implements BasicEventHandler, Closeable, Exte
 		manager.processEvent(event);
 	}
 
-	public void reportContainerUsage(Object2IntMap<EpisimContainer<?>> maxGroupSize,
-									 Object2IntMap<EpisimContainer<?>> containerSize, Map<EpisimContainer<?>, Object2IntMap<String>> activityUsage) {
+//	public void reportContainerUsage(Object2IntMap<EpisimContainer<?>> maxGroupSize,
+//									 Object2IntMap<EpisimContainer<?>> containerSize, Map<EpisimContainer<?>, Object2IntMap<String>> activityUsage) {
+	public void reportContainerUsage(Object2IntMap<EpisimContainer<?>> maxGroupSize, Object2IntMap<EpisimContainer<?>> totalUsers,
+				 Map<EpisimContainer<?>, Object2IntMap<String>> activityUsage) {
 
-		BufferedWriter out = EpisimWriter.prepare(base + "containerUsage.txt.gz", "id", "types", "containerSize", "maxGroupSize");
+		BufferedWriter out = EpisimWriter.prepare(base + "containerUsage.txt.gz", "id", "types", "totalUsers", "maxGroupSize");
 
 		for (Object2IntMap.Entry<EpisimContainer<?>> kv : maxGroupSize.object2IntEntrySet()) {
 
@@ -475,7 +477,7 @@ public final class EpisimReporting implements BasicEventHandler, Closeable, Exte
 			this.writer.append(out, new String[]{
 					kv.getKey().getContainerId().toString(),
 					String.valueOf(activityUsage.get(kv.getKey())),
-					String.valueOf((int) (containerSize.getInt(kv.getKey()) * scale)),
+					String.valueOf((int) (totalUsers.getInt(kv.getKey()) * scale)),
 					String.valueOf((int) (kv.getIntValue() * scale))
 			});
 		}
