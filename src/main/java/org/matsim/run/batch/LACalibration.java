@@ -46,8 +46,10 @@ public class LACalibration implements BatchRun<LACalibration.Params> {
 		
 		Map<LocalDate, Integer> infectionsPerDay = new HashMap<>();
 		
-		infectionsPerDay.put(LocalDate.parse("2020-02-15"), params.dailyImportedCases);
+		infectionsPerDay.put(LocalDate.parse(params.startDate), params.dailyImportedCases);
 		episimConfig.setInfections_pers_per_day(infectionsPerDay);
+		
+		episimConfig.setStartDate(params.startDate);
 		
 		//adapt episimConfig here
 		//...
@@ -73,14 +75,14 @@ public class LACalibration implements BatchRun<LACalibration.Params> {
 		@GenerateSeeds(1)
 		public long seed;
 		
-//		@Parameter({1.E-2, 1.E-3, 1.E-4})
-		@Parameter({1.E-5, 1.E-6})
+		@Parameter({1E-3, 1E-4, 1E-5, 1E-6})
 		double calibrationParam;
 		
-//		@IntParameter({1, 5, 10})
 		@IntParameter({1})
-//		@IntParameter({1})
 		int dailyImportedCases;
+		
+		@StringParameter({"2020-02-15", "2020-02-22"})
+		String startDate;
 		
 //		@Parameter({0.75, 0.5})
 //		double remainingFraction;
