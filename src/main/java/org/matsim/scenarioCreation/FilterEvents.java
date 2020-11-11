@@ -26,6 +26,7 @@ import org.matsim.api.core.v01.Id;
 import org.matsim.core.api.experimental.events.EventsManager;
 import org.matsim.core.events.EventsUtils;
 import org.matsim.core.events.algorithms.EventWriterXML;
+import org.matsim.core.population.PopulationUtils;
 import org.matsim.core.utils.io.IOUtils;
 import org.matsim.facilities.ActivityFacility;
 import picocli.CommandLine;
@@ -54,13 +55,16 @@ public class FilterEvents implements Callable<Integer> {
 
 	private static Logger log = LogManager.getLogger(FilterEvents.class);
 
-	@Parameters(paramLabel = "file", arity = "1", description = "Path to event file", defaultValue = "../public-svn/matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-10pct/la-v1.1-10pct_teleported1.output_events-reduced-for-episim.xml.gz")
+	@Parameters(paramLabel = "file", arity = "1", description = "Path to event file", defaultValue = "../public-svn/matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-25pct/la-v1.1-25pct_teleported1.output_events-reduced-for-episim.xml.gz")
 	private Path input;
 
 	@Option(names = "--ids", description = "Path to person ids to filter for.", defaultValue = "")
 	private Path personIds;
 
-	@Option(names = "--output", description = "Output file", defaultValue = "output/eventsFilteredLosAngeles.xml.gz")
+	@Option(names = "--population", description = "Path to population to filter for.", defaultValue = "../public-svn/matsim/scenarios/countries/us/los-angeles/los-angeles-v1.0/output/los-angeles-v1.1-25pct/los-angeles-v1.0-population-25pct_2020-03-07_teleported_reduced-for-episim.xml.gz")
+	private String population;
+	
+	@Option(names = "--output", description = "Output file", defaultValue = "output/la-v1.1-10pct_teleported1.output_events-reduced-for-episim.xml.gzla-v1.1-25pct_teleported1.output_events-reduced-for-episim.xml.gz")
 	private Path output;
 
 //	@Option(names = "--educationFacilities", description = "Path to aggregated facilities file", defaultValue = "../shared-svn/projects/episim/matsim-files/snz/Berlin/processed-data/be_snz_educationFacilities.txt")
@@ -105,7 +109,7 @@ public class FilterEvents implements Callable<Integer> {
 //			facilityreplacements = readAndMapMergedFacilities(facilities.toString());
 //		}
 
-		FilterHandler handler = new FilterHandler(null, null, facilityreplacements);
+		FilterHandler handler = new FilterHandler(PopulationUtils.readPopulation(population), null, facilityreplacements);
 		manager.addHandler(handler);
 		EventsUtils.readEvents(manager, input.toString());
 

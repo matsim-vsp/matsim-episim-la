@@ -85,7 +85,16 @@ public class FilterHandler implements ActivityEndEventHandler, PersonEntersVehic
 					activityEndEvent.getActType());
 		}
 		String corrAct = activityEndEvent.getActType().split("_")[0];
-		ActivityEndEvent e = new ActivityEndEvent(activityEndEvent.getTime(), activityEndEvent.getPersonId(), activityEndEvent.getLinkId(), activityEndEvent.getFacilityId(), corrAct);
+		
+		Id<ActivityFacility> facilityId = null;
+		if (activityEndEvent.getActType().contains("home")) {
+			facilityId = Id.create("home_" + population.getPersons().get(activityEndEvent.getPersonId()).getAttributes().getAttribute("householdId").toString(), ActivityFacility.class);
+		}
+		else {
+			facilityId = Id.create(activityEndEvent.getLinkId().toString(), ActivityFacility.class);
+		}
+		
+		ActivityEndEvent e = new ActivityEndEvent(activityEndEvent.getTime(), activityEndEvent.getPersonId(), activityEndEvent.getLinkId(), facilityId, corrAct);
 		facilities.add(e.getFacilityId());
 		events.add(e);
 	}
@@ -112,7 +121,16 @@ public class FilterHandler implements ActivityEndEventHandler, PersonEntersVehic
 					activityStartEvent.getCoord());
 		}
 		String corrAct = activityStartEvent.getActType().split("_")[0];
-		ActivityStartEvent e = new ActivityStartEvent(activityStartEvent.getTime(), activityStartEvent.getPersonId(), activityStartEvent.getLinkId(), activityStartEvent.getFacilityId(), corrAct, null);
+		
+		Id<ActivityFacility> facilityId = null;
+		if (activityStartEvent.getActType().contains("home")) {
+			facilityId = Id.create("home_" + population.getPersons().get(activityStartEvent.getPersonId()).getAttributes().getAttribute("householdId").toString(), ActivityFacility.class);
+		}
+		else {
+			facilityId = Id.create(activityStartEvent.getLinkId().toString(), ActivityFacility.class);
+		}
+		
+		ActivityStartEvent e = new ActivityStartEvent(activityStartEvent.getTime(), activityStartEvent.getPersonId(), activityStartEvent.getLinkId(), facilityId, corrAct, null);
 		facilities.add(e.getFacilityId());
 		events.add(e);
 	}
