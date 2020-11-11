@@ -138,7 +138,7 @@ public class OpenLosAngelesScenario extends AbstractModule {
 		else throw new RuntimeException("Sample size does not exist!");
 		
 		
-		episimConfig.setFacilitiesHandling(EpisimConfigGroup.FacilitiesHandling.bln);
+		episimConfig.setFacilitiesHandling(EpisimConfigGroup.FacilitiesHandling.snz);
 		episimConfig.setStartDate("2020-02-15");
 		
 		// Here we set the disease import.
