@@ -41,28 +41,21 @@ public class LACalibration implements BatchRun<LACalibration.Params> {
 		Config config = module.config();
 		config.global().setRandomSeed(params.seed);
 
+		//adapt episimConfig here
 		EpisimConfigGroup episimConfig = ConfigUtils.addOrGetModule(config, EpisimConfigGroup.class);
 		episimConfig.setCalibrationParameter(params.calibrationParam);
 		
 		Map<LocalDate, Integer> infectionsPerDay = new HashMap<>();
-		
-		infectionsPerDay.put(LocalDate.parse(params.startDate), params.dailyImportedCases);
+		infectionsPerDay.put(LocalDate.parse(params.startDate1), params.dailyImportedCases1);
+		infectionsPerDay.put(LocalDate.parse(params.startDate2), params.dailyImportedCases2);
 		episimConfig.setInfections_pers_per_day(infectionsPerDay);
-		
-		episimConfig.setStartDate(params.startDate);
-		
-		//adapt episimConfig here
-		//...
 
-		TracingConfigGroup tracingConfig = ConfigUtils.addOrGetModule(config, TracingConfigGroup.class);
-		
 		//adapt tracingConfig here
-		//...
+		TracingConfigGroup tracingConfig = ConfigUtils.addOrGetModule(config, TracingConfigGroup.class);
 		
 		ConfigBuilder builder = FixedPolicy.parse(episimConfig.getPolicy());
 		
 		//adapt restrictions here
-		//...
 //		builder.restrict("2020-06-10", params.remainingFraction, OpenLosAngelesScenario.DEFAULT_ACTIVITIES);
 		
 		episimConfig.setPolicy(FixedPolicy.class, builder.build());
@@ -75,14 +68,20 @@ public class LACalibration implements BatchRun<LACalibration.Params> {
 		@GenerateSeeds(1)
 		public long seed;
 		
-		@Parameter({1E-3, 1E-4, 1E-5, 1E-6})
+		@Parameter({1E-3, 1E-4})
 		double calibrationParam;
 		
-		@IntParameter({1})
-		int dailyImportedCases;
+		@StringParameter({"2020-02-15"})
+		String startDate1;
 		
-		@StringParameter({"2020-02-15", "2020-02-22"})
-		String startDate;
+		@IntParameter({1, 5, 10})
+		int dailyImportedCases1;
+		
+		@StringParameter({"2020-04-01"})
+		String startDate2;
+		
+		@IntParameter({0})
+		int dailyImportedCases2;
 		
 //		@Parameter({0.75, 0.5})
 //		double remainingFraction;
