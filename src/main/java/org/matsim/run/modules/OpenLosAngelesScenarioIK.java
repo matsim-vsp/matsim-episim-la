@@ -144,7 +144,7 @@ public class OpenLosAngelesScenarioIK extends AbstractModule {
 		
 		episimConfig.setFacilitiesHandling(EpisimConfigGroup.FacilitiesHandling.snz);
 		episimConfig.setStartDate("2020-02-15");
-		episimConfig.setHospitalFactor(10.);
+		episimConfig.setHospitalFactor(5.);
 		
 		// Here we set the disease import.
 		// First, set the day until which we have a disease import.
