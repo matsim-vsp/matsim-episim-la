@@ -169,13 +169,13 @@ public class OpenLosAngelesScenarioIK extends AbstractModule {
 				.restrict("2020-03-22", 0.6, DEFAULT_ACTIVITIES)
 				.restrict("2020-04-05", 0.55, DEFAULT_ACTIVITIES)
 				.restrict("2020-04-25", 0.6, DEFAULT_ACTIVITIES)
-				.restrict("2020-05-01", 0.65, DEFAULT_ACTIVITIES)
-				.restrict("2020-06-06", 0.7, DEFAULT_ACTIVITIES)
+				.restrict("2020-05-01", 0.7, DEFAULT_ACTIVITIES)
 
 				// fraction of people that wear a mask
-				.restrict("2020-04-01", Restriction.ofMask(FaceMask.CLOTH, 0.9), "pt") // 90% of public transport passengers wear a cloth mask 
-				.restrict("2020-06-01", Restriction.ofMask(FaceMask.CLOTH, 0.8), ACTIVITIES_MASKES)
-				
+				.restrict("2020-06-18", Restriction.ofMask(FaceMask.CLOTH, 0.9), "pt") // 90% of public transport passengers wear a cloth mask 
+				.restrict("2020-06-18", Restriction.ofMask(FaceMask.CLOTH, 0.25), ACTIVITIES_MASKES)
+				.restrict("2020-07-01", Restriction.ofMask(FaceMask.CLOTH, 0.8), ACTIVITIES_MASKES)
+
 				// adjust the contact intensity over time
 //				.restrict("2020-06-01", Restriction.ofCiCorrection(0.9), DEFAULT_ACTIVITIES)
 				.build()

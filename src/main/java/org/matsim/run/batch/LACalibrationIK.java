@@ -6,6 +6,7 @@ import org.matsim.core.config.ConfigUtils;
 import org.matsim.episim.BatchRun;
 import org.matsim.episim.EpisimConfigGroup;
 import org.matsim.episim.TracingConfigGroup;
+import org.matsim.episim.model.FaceMask;
 import org.matsim.episim.policy.FixedPolicy;
 import org.matsim.episim.policy.FixedPolicy.ConfigBuilder;
 import org.matsim.episim.policy.Restriction;
@@ -61,10 +62,10 @@ public class LACalibrationIK implements BatchRun<LACalibrationIK.Params> {
 //		builder.restrict("2020-03-15", params.remainingMidMarch, OpenLosAngelesScenario.DEFAULT_ACTIVITIES);
 //		builder.restrict("2020-05-01", params.remainingBeginMay, OpenLosAngelesScenario.DEFAULT_ACTIVITIES);
 
-		builder.restrict("2020-05-01", Restriction.ofCiCorrection(params.ciFactorMay), OpenLosAngelesScenario.DEFAULT_ACTIVITIES);
-		builder.restrict("2020-06-01", Restriction.ofCiCorrection(params.ciFactorJune), OpenLosAngelesScenario.DEFAULT_ACTIVITIES);
-		builder.restrict("2020-07-01", Restriction.ofCiCorrection(params.ciFactorJuly), OpenLosAngelesScenario.DEFAULT_ACTIVITIES);
-
+		builder.restrict("2020-05-01", Restriction.ofCiCorrection(params.ciFactorMay), OpenLosAngelesScenarioIK.DEFAULT_ACTIVITIES);
+		builder.restrict("2020-06-01", Restriction.ofCiCorrection(params.ciFactorJune), OpenLosAngelesScenarioIK.DEFAULT_ACTIVITIES);
+		builder.restrict("2020-07-01", Restriction.ofCiCorrection(params.ciFactorJuly), OpenLosAngelesScenarioIK.DEFAULT_ACTIVITIES);
+		
 		episimConfig.setPolicy(FixedPolicy.class, builder.build());
 
 		return config;
@@ -72,16 +73,16 @@ public class LACalibrationIK implements BatchRun<LACalibrationIK.Params> {
 
 	public static final class Params {
 		
-		@GenerateSeeds(1)
+		@GenerateSeeds(3)
 		public long seed;
 		
-		@Parameter({5.0E-6, 5.0E-5, 5.0E-4})
+		@Parameter({4.0E-5})
 		double calibrationParam;
 		
 		@StringParameter({"2020-03-01"})
 		String startDiseaseImport;
 		
-		@IntParameter({1, 10})
+		@IntParameter({1})
 		int dailyImportedCases1;
 		
 		@StringParameter({"2020-03-15"})
@@ -93,13 +94,13 @@ public class LACalibrationIK implements BatchRun<LACalibrationIK.Params> {
 //		@Parameter({0.6, 0.7})
 //		double remainingBeginMay;
 		
-		@Parameter({0.9})
+		@Parameter({1.0})
 		double ciFactorMay;
 		
-		@Parameter({0.9})
+		@Parameter({1.0})
 		double ciFactorJune;
 		
-		@Parameter({0.7})
+		@Parameter({1.0})
 		double ciFactorJuly;
 		
 	}
