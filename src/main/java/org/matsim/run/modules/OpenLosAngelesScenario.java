@@ -54,7 +54,11 @@ public class OpenLosAngelesScenario extends AbstractModule {
 	public static final String[] DEFAULT_ACTIVITIES = {
 			"work", "university", "school", "escort", "schoolescort", "schoolpureescort", "schoolridesharing", "non-schoolescort", 
 			"maintenance", "HHmaintenance", "personalmaintenance", "eatout", "eatoutbreakfast", "eatoutlunch", "eatoutdinner",
-			"visiting", "discretionary", "specialevent", "atwork", "atworkbusiness", "atworklunch", "atworkother", "shop", "business"
+			"visiting", "discretionary", "specialevent", "atwork", "atworkbusiness", "atworklunch", "atworkother", "business"
+	}; //"shop"
+	
+	public static final String[] ACTIVITIES_MASKES = { 
+			"maintenance", "HHmaintenance", "personalmaintenance", "discretionary", "shop"
 	};
 
 	/**
@@ -156,14 +160,28 @@ public class OpenLosAngelesScenario extends AbstractModule {
 		
 		// Here we set the restrictions. A possible starting point could be the google mobility reports: https://www.google.com/covid19/mobility/
 		episimConfig.setPolicy(FixedPolicy.class, FixedPolicy.config()
-				.restrict("2020-03-15", 0.85, DEFAULT_ACTIVITIES) //only 85% of out-of-home activities still occur
-				.restrict("2020-03-22", 0.65, DEFAULT_ACTIVITIES)
-				.restrict("2020-03-29", 0.6, DEFAULT_ACTIVITIES)
-				.restrict("2020-06-10", 0.75, DEFAULT_ACTIVITIES)
+				.restrict("2020-03-10", 0.9, DEFAULT_ACTIVITIES)
+				.restrict("2020-03-10", 0.9, "shop")
+				.restrict("2020-03-17", 0.8, DEFAULT_ACTIVITIES)
+				.restrict("2020-03-17", 1.0, "shop")
+				.restrict("2020-03-20", 0.75, DEFAULT_ACTIVITIES)
+				.restrict("2020-03-20", 0.85, "shop")
+				.restrict("2020-03-25", 0.6, DEFAULT_ACTIVITIES)
+				.restrict("2020-03-25", 0.7, "shop")
+				.restrict("2020-04-12", 0.4, DEFAULT_ACTIVITIES)
+				.restrict("2020-04-12", 0.6, "shop")
+				.restrict("2020-05-11", 0.5, DEFAULT_ACTIVITIES)
+				.restrict("2020-05-11", 0.7, "shop")
+				.restrict("2020-06-30", 0.6, DEFAULT_ACTIVITIES)
 
-				//90% of public transport passengers wear a cloth mask 
-				.restrict("2020-04-01", Restriction.ofMask(FaceMask.CLOTH, 0.9), "pt")
+				// fraction of people that wear a mask
+				.restrict("2020-04-03", Restriction.ofMask(FaceMask.CLOTH, 0.1), ACTIVITIES_MASKES)
+				.restrict("2020-04-29", Restriction.ofMask(FaceMask.CLOTH, 0.5), ACTIVITIES_MASKES)
+				.restrict("2020-06-18", Restriction.ofMask(FaceMask.CLOTH, 0.9), "pt") // 90% of public transport passengers wear a cloth mask 
+				.restrict("2020-06-22", Restriction.ofMask(FaceMask.CLOTH, 0.6), ACTIVITIES_MASKES)
+				.restrict("2020-07-14", Restriction.ofMask(FaceMask.CLOTH, 0.7), ACTIVITIES_MASKES)
 				.build()
+
 		);
 
 		return config;
