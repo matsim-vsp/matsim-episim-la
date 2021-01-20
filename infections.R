@@ -7,7 +7,7 @@ runB <- "seed_4711-calibrationParam_4.0E-5-startDiseaseImport_2020-03-01-dailyIm
 runC <- "seed_4711-calibrationParam_4.0E-5-startDiseaseImport_2020-03-01-dailyImportedCases1_1-endDiseaseImport_2020-03-15-ciFactorMay_1.0-ciFactorJune_1.0-ciFactorJuly_0.8/calibration2"
 runD <- "seed_4711-calibrationParam_4.0E-5-startDiseaseImport_2020-03-01-dailyImportedCases1_1-endDiseaseImport_2020-03-15-ciFactorMay_1.0-ciFactorJune_1.0-ciFactorJuly_1.0/calibration1"
 runE <- "seed_4711-calibrationParam_4.0E-5-startDiseaseImport_2020-03-01-dailyImportedCases1_1-endDiseaseImport_2020-03-15-ciFactorMay_1.0-ciFactorJune_1.0-ciFactorJuly_1.0_120/calibration1"
-baseDir <- "/Users/ihab/Documents/workspace/matsim-episim-la/output-2020-12-13/"
+baseDir <- "./output-2020-12-13/"
 
 fileEnding <- ".infections.txt"
 dirRunA <- paste(baseDir, runA, fileEnding, sep = "")
@@ -23,8 +23,8 @@ outputNewCases <- paste(baseDir, "validation-new-cases.png", sep = "")
 outputHospitalization <- paste(baseDir, "validation-hospitalization.png", sep = "")
 
 
-reportedDataLAcounty <- read.csv("/Users/ihab/Documents/private-work/EPISIM-LA/LA_County_Covid19_cases_deaths_date_table.csv", sep=",")
-reportedDataCDPHSCAG <- read_delim("/Users/ihab/Documents/private-work/EPISIM-LA/CDPH_data_scag.csv",
+reportedDataLAcounty <- read.csv("./validation/LA_County_Covid19_cases_deaths_date_table.csv", sep=",")
+reportedDataCDPHSCAG <- read_delim("./validation/CDPH_data_scag.csv",
                                    delim=";",
                                    locale=locale(decimal_mark = "."))
 
