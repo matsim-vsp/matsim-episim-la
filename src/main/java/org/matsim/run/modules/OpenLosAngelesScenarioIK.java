@@ -192,7 +192,7 @@ public class OpenLosAngelesScenarioIK extends AbstractModule {
 
 			//in this exmaple vaccinations start on 2020-12-27
 			vaccinationConfig.setVaccinationCapacity_pers_per_day(Map.of(
-					episimConfig.getStartDate(), 1000,
+					episimConfig.getStartDate(), 0,
 					LocalDate.parse("2020-12-27"), 2000
 					));
 		}
