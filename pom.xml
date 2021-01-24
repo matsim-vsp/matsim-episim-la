@@ -222,7 +222,7 @@
 		<dependency>
 	   		<groupId>com.github.matsim-org</groupId>
 	    	<artifactId>matsim-episim</artifactId>
-	    	<version>ba3ef70baf</version>
+	    	<version>1644615861</version>
 		</dependency>
     </dependencies>
 

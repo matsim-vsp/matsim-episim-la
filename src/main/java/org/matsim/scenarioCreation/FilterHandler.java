@@ -29,6 +29,7 @@ import org.matsim.api.core.v01.events.handler.PersonLeavesVehicleEventHandler;
 import org.matsim.api.core.v01.population.Person;
 import org.matsim.api.core.v01.population.Population;
 import org.matsim.episim.InfectionEventHandler;
+import org.matsim.episim.ReplayHandler;
 import org.matsim.facilities.ActivityFacility;
 
 import javax.annotation.Nullable;
@@ -69,7 +70,7 @@ public class FilterHandler implements ActivityEndEventHandler, PersonEntersVehic
 		counter++;
 		if (activityEndEvent.getPersonId().toString().startsWith("freight")) 
 			return;
-		if (!InfectionEventHandler.shouldHandleActivityEvent(activityEndEvent, activityEndEvent.getActType()))
+		if (!ReplayHandler.shouldHandleActivityEvent(activityEndEvent, activityEndEvent.getActType()))
 			return;
 		if (population != null && !population.getPersons().containsKey(activityEndEvent.getPersonId()))
 			return;
@@ -104,7 +105,7 @@ public class FilterHandler implements ActivityEndEventHandler, PersonEntersVehic
 		counter++;
 		if (activityStartEvent.getPersonId().toString().startsWith("freight")) 
 			return;
-		if (!InfectionEventHandler.shouldHandleActivityEvent(activityStartEvent, activityStartEvent.getActType()))
+		if (!ReplayHandler.shouldHandleActivityEvent(activityStartEvent, activityStartEvent.getActType()))
 			return;
 		if (population != null && !population.getPersons().containsKey(activityStartEvent.getPersonId()))
 			return;
@@ -142,7 +143,7 @@ public class FilterHandler implements ActivityEndEventHandler, PersonEntersVehic
 			return;
 		if (!personEntersVehicleEvent.getVehicleId().toString().startsWith("pt")) 
 			return;
-		if (!InfectionEventHandler.shouldHandlePersonEvent(personEntersVehicleEvent))
+		if (!ReplayHandler.shouldHandlePersonEvent(personEntersVehicleEvent))
 			return;
 		if (population != null && !population.getPersons().containsKey(personEntersVehicleEvent.getPersonId()))
 			return;
@@ -159,7 +160,7 @@ public class FilterHandler implements ActivityEndEventHandler, PersonEntersVehic
 			return;
 		if (!personLeavesVehicleEvent.getVehicleId().toString().startsWith("pt")) 
 			return;
-		if (!InfectionEventHandler.shouldHandlePersonEvent(personLeavesVehicleEvent))
+		if (!ReplayHandler.shouldHandlePersonEvent(personLeavesVehicleEvent))
 			return;
 		if (population != null && !population.getPersons().containsKey(personLeavesVehicleEvent.getPersonId()))
 			return;
