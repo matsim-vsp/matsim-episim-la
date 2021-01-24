@@ -29,6 +29,7 @@ import java.util.Map;
 import org.matsim.core.config.Config;
 import org.matsim.core.config.ConfigUtils;
 import org.matsim.episim.EpisimConfigGroup;
+import org.matsim.episim.VaccinationConfigGroup;
 import org.matsim.episim.model.AgeDependentInfectionModelWithSeasonality;
 import org.matsim.episim.model.AgeDependentProgressionModel;
 import org.matsim.episim.model.ContactModel;
@@ -180,6 +181,22 @@ public class OpenLosAngelesScenarioIK extends AbstractModule {
 //				.restrict("2020-06-01", Restriction.ofCiCorrection(0.9), DEFAULT_ACTIVITIES)
 				.build()
 		);
+		
+		//vaccination example
+		//todo adapt this for LA
+		{
+			VaccinationConfigGroup vaccinationConfig = ConfigUtils.addOrGetModule(config, VaccinationConfigGroup.class);
+			//probability of infection is reduced to 10% 28 days after the vaccination. Until day 28 the effectiveness is interpolated linearly.
+			vaccinationConfig.setEffectiveness(0.9);
+			vaccinationConfig.setDaysBeforeFullEffect(28);
+
+			//in this exmaple vaccinations start on 2020-12-27
+			vaccinationConfig.setVaccinationCapacity_pers_per_day(Map.of(
+					episimConfig.getStartDate(), 1000,
+					LocalDate.parse("2020-12-27"), 2000
+					));
+		}
+
 
 		return config;
 	}
