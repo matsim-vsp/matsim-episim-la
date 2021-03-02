@@ -74,7 +74,7 @@ public class OpenLosAngelesScenarioIK extends AbstractModule {
 		config.getOrAddContainerParams("escort").setContactIntensity(1.0);
 		
 		config.getOrAddContainerParams("school").setContactIntensity(11.0); // many people, small space, no air exchange
-//		config.getOrAddContainerParams("schoolescort");
+//		config.getOrAddContainerParams("schoolescort"); // no need to be set because the activity type starts with "school", for which the CI is already set.
 //		config.getOrAddContainerParams("schoolpureescort");
 //		config.getOrAddContainerParams("schoolridesharing");
 		
@@ -83,7 +83,7 @@ public class OpenLosAngelesScenarioIK extends AbstractModule {
 		config.getOrAddContainerParams("HHmaintenance").setContactIntensity(0.88);
 		config.getOrAddContainerParams("personalmaintenance").setContactIntensity(0.88);
 		
-		config.getOrAddContainerParams("eatout").setContactIntensity(9.24);
+		config.getOrAddContainerParams("eatout").setContactIntensity(9.24).setSeasonal(true);
 //		config.getOrAddContainerParams("eatoutbreakfast");
 //		config.getOrAddContainerParams("eatoutlunch");
 //		config.getOrAddContainerParams("eatoutdinner");
@@ -101,6 +101,7 @@ public class OpenLosAngelesScenarioIK extends AbstractModule {
 		config.getOrAddContainerParams("non-schoolescort").setContactIntensity(1.0);
 		
 		config.getOrAddContainerParams("quarantine_home").setContactIntensity(1.0);
+		
 	}
 
 	@Provides
@@ -196,6 +197,15 @@ public class OpenLosAngelesScenarioIK extends AbstractModule {
 					LocalDate.parse("2020-12-27"), 2000
 					));
 		}
+		
+		// account for seasonal effects
+		Map<LocalDate, Double> date2fraction = new HashMap<>();
+		date2fraction.put(LocalDate.parse("2020-02-01"), 0.);
+		date2fraction.put(LocalDate.parse("2020-04-01"), 0.8);
+		date2fraction.put(LocalDate.parse("2020-09-01"), 0.8);
+		date2fraction.put(LocalDate.parse("2020-10-01"), 0.6);
+		date2fraction.put(LocalDate.parse("2020-11-01"), 0.1);
+		episimConfig.setLeisureOutdoorFraction(date2fraction);
 
 
 		return config;

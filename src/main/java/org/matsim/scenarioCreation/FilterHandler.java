@@ -95,6 +95,12 @@ public class FilterHandler implements ActivityEndEventHandler, PersonEntersVehic
 			facilityId = Id.create(activityEndEvent.getLinkId().toString(), ActivityFacility.class);
 		}
 		
+		if (activityEndEvent.getActType().contains("work")) {
+			String workInd = population.getPersons().get(activityEndEvent.getPersonId()).getAttributes().getAttribute("wkind20").toString();
+			String workOcc = population.getPersons().get(activityEndEvent.getPersonId()).getAttributes().getAttribute("wkocc24").toString();
+			corrAct = "work_" + workInd + "_" + workOcc;
+		}
+		
 		ActivityEndEvent e = new ActivityEndEvent(activityEndEvent.getTime(), activityEndEvent.getPersonId(), activityEndEvent.getLinkId(), facilityId, corrAct);
 		facilities.add(e.getFacilityId());
 		events.add(e);
